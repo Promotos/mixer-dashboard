@@ -1,2 +1,2 @@
 # mixer-dashboard
-Streamer dsahboard for mixer.com
+Streamer dashboard for mixer.com
