@@ -21,11 +21,18 @@ public class SceneFactory {
     
     private static final Logger LOG = Logger.getLogger(SceneFactory.class.getName());
     private static final String MAIN_SCENE = "MainScene.fxml";
+    private static final String MAIN_SCENE_CSS = "MainScene.css";
+    private static final String SELECT_USER_SCENE = "SelectUserScene.fxml";
+    private static final String SELECT_USER_SCENE_CSS = "SelectUserScene.css";
     
     private Context context;
     
     public SceneFactory(Context ctx) {
         this.context = ctx;
+    }
+    
+    public Parent selectUserScene() {
+        return loadSceneByName(SELECT_USER_SCENE);
     }
     
     public Parent mainScene() {
