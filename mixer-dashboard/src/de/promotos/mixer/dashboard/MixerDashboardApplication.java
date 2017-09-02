@@ -6,12 +6,10 @@
 package de.promotos.mixer.dashboard;
 
 import de.promotos.mixer.dashboard.core.Context;
-import de.promotos.mixer.dashboard.scene.SceneFactory;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -20,16 +18,29 @@ import javafx.stage.Stage;
  */
 public class MixerDashboardApplication extends Application {
     
+    private static final Logger LOG = Logger.getLogger(MixerDashboardApplication.class.getName());
+    
     @Override
     public void start(Stage stage) {
+        LOG.log(Level.INFO, "Application in start level.");
         final Context context = new Context();
-        final Scene scene = new Scene(new SceneFactory(context).mainScene(), 600, 400);
-
+        context.setStage(stage);
+        
+        context.showSelectUserScene();
+        
         stage.setTitle("mixer-dashboard");
-        stage.setScene(scene);
         stage.show();
+        LOG.log(Level.INFO, "Application show.");
     }
 
+    @Override
+    public void stop() throws Exception {
+        LOG.log(Level.INFO, "Application in stop level.");
+        /* TODO: Required because mixer api left stuff open. */
+        System.exit(0);
+    }
+
+    
     /**
      * @param args the command line arguments
      */
