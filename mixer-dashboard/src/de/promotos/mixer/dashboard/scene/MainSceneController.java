@@ -53,6 +53,7 @@ public class MainSceneController implements Initializable, Contextable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // TODO
     }
 
     @Override
@@ -77,7 +78,6 @@ public class MainSceneController implements Initializable, Contextable {
                 throw new IllegalStateException(ex);
             }            
         }, 1, 10, TimeUnit.SECONDS);
-
     }
 
 }

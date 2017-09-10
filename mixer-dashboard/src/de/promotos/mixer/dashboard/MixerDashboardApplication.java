@@ -21,7 +21,6 @@ public class MixerDashboardApplication extends Application {
     
     private Context context;
     
-    @Override
     public void start(Stage stage) {
         LOG.log(Level.INFO, "Application in start level.");
         context = new Context();

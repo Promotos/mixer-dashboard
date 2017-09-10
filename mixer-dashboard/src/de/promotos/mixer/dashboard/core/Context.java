@@ -22,9 +22,9 @@ public class Context {
 
     private Stage stage;
     private String userName;
-    private MixerApiDelegate mixer;
+    private final MixerApiDelegate mixer;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-
+    
     public Context() {
         mixer = new MixerApiDelegate();
     }
@@ -60,7 +60,7 @@ public class Context {
     public void shutdown() {
         scheduler.shutdown();
     }
-    
+       
     private void showScene(Parent parent) {
         final Scene s = new Scene(parent, 600, 400);
         stage.setScene(s);
