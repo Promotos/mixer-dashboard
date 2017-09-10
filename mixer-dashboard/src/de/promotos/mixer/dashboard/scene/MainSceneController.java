@@ -5,18 +5,24 @@
  */
 package de.promotos.mixer.dashboard.scene;
 
-import com.google.common.util.concurrent.Futures;
-import com.mixer.api.MixerAPI;
 import com.mixer.api.resource.MixerUser;
-import com.mixer.api.response.users.UserSearchResponse;
-import com.mixer.api.services.impl.UsersService;
-import com.mixer.api.util.ResponseHandler;
+import de.promotos.mixer.dashboard.core.ApiException;
 import de.promotos.mixer.dashboard.core.Context;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.Tooltip;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
@@ -24,6 +30,23 @@ import javafx.fxml.Initializable;
  * @author Promotos
  */
 public class MainSceneController implements Initializable, Contextable {
+
+    private Context context;
+    
+    @FXML
+    private TabPane tpMain;
+    @FXML
+    private Label lbUsername;
+    @FXML
+    private Label lbExperience;
+    @FXML
+    private Label lbSparks;
+    @FXML
+    private Label lbOnline;
+    @FXML
+    private Tab pnlChannel;
+    @FXML
+    private AnchorPane pnlChat;
 
     /**
      * Initializes the controller class.
@@ -33,32 +56,28 @@ public class MainSceneController implements Initializable, Contextable {
         // TODO
     }
 
-    @FXML
-    private void btnHelloWorldClicked(ActionEvent event) {
-        System.out.println("Hello World Clicked!!!!");
-
-        
-        // Construct an instance of the Mixer API such that we can query certain
-// endpoints for data.
-        MixerAPI mixer = new MixerAPI();
-
-// Invoke the `UsersService.class` in order to access the methods within
-// that service.  Then, assign a callback using Guava's FutureCallback
-// class so we can act on the response.
-        Futures.addCallback(mixer.use(UsersService.class).search("Promoto"), new ResponseHandler<UserSearchResponse>() {
-            // Set up a handler for the response
-            @Override
-            public void onSuccess(UserSearchResponse response) {
-                for (MixerUser user : response) {
-                    System.out.println(user.username + ", online:" + user.channel.online);
-                }
-            }
-        });
-
-    }
-
     @Override
     public void setContext(Context context) {
+        this.context = context;
+        context.scheduleAtFixedRate(() -> {
+            try {
+                final MixerUser user = context.identifyUser(context.getUsername());
+                Platform.runLater(() -> {
+                    final Logger LOG = Logger.getLogger(MainSceneController.class.getName());
+                    LOG.log(Level.FINE, "Backgound update ui information.");
+                    final NumberFormat num = DecimalFormat.getInstance();
+
+                    /* Top Panel */
+                    lbUsername.setText(user.username);
+                    lbUsername.setTooltip(new Tooltip( String.format("email: %s", user.email != null ? user.email : "n/a")));
+                    lbOnline.setText( String.format("Channel: %s", user.channel.online ? "online" : "offline"));
+                    lbExperience.setText( String.format("Experience: %s", num.format(user.experience)) );
+                    lbSparks.setText( String.format("Sparks: %s", num.format(user.sparks)) );
+                });
+            } catch (ApiException ex) {
+                throw new IllegalStateException(ex);
+            }            
+        }, 1, 10, TimeUnit.SECONDS);
     }
 
 }

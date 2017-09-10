@@ -6,7 +6,6 @@
 package de.promotos.mixer.dashboard;
 
 import de.promotos.mixer.dashboard.core.Context;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -20,10 +19,11 @@ public class MixerDashboardApplication extends Application {
     
     private static final Logger LOG = Logger.getLogger(MixerDashboardApplication.class.getName());
     
-    @Override
+    private Context context;
+    
     public void start(Stage stage) {
         LOG.log(Level.INFO, "Application in start level.");
-        final Context context = new Context();
+        context = new Context();
         context.setStage(stage);
         
         context.showSelectUserScene();
@@ -35,6 +35,7 @@ public class MixerDashboardApplication extends Application {
 
     @Override
     public void stop() throws Exception {
+        context.shutdown();
         LOG.log(Level.INFO, "Application in stop level.");
         /* TODO: Required because mixer api left stuff open. */
         System.exit(0);

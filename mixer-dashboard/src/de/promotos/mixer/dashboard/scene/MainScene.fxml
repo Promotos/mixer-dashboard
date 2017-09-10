@@ -1,11 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="de.promotos.mixer.dashboard.scene.MainSceneController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.promotos.mixer.dashboard.scene.MainSceneController">
    <children>
-      <Button layoutX="192.0" layoutY="127.0" mnemonicParsing="false" onAction="#btnHelloWorldClicked" text="Hello World" />
+      <Pane layoutX="14.0" layoutY="14.0" prefHeight="82.0" prefWidth="572.0" styleClass="mainFxmlClass" stylesheets="@MainScene.css" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
+         <children>
+            <Label fx:id="lbUsername" layoutX="14.0" layoutY="14.0" text="Label">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbExperience" alignment="CENTER_RIGHT" layoutX="378.0" layoutY="19.0" prefHeight="17.0" prefWidth="180.0" text="Label" />
+            <Label fx:id="lbSparks" alignment="CENTER_RIGHT" layoutX="379.0" layoutY="41.0" prefHeight="17.0" prefWidth="180.0" text="Label" />
+            <Label fx:id="lbOnline" layoutX="14.0" layoutY="41.0" prefHeight="17.0" prefWidth="180.0" text="Label" />
+         </children>
+      </Pane>
+      <TabPane fx:id="tpMain" layoutX="29.0" layoutY="100.0" prefHeight="286.0" prefWidth="572.0" styleClass="mainFxmlClass" stylesheets="@MainScene.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="100.0">
+        <tabs>
+          <Tab fx:id="pnlChannel" text="Channel">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="398.0" stylesheets="@MainScene.css" />
+            </content>
+          </Tab>
+          <Tab text="Chat">
+            <content>
+              <AnchorPane fx:id="pnlChat" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>
